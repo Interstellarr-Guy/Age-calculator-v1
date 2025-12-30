@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Differential Calculator</title>
+    <link rel="stylesheet" href="ageC.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Age Calculator</h2>
+    <div class="input-group">
+        <label for="dob">Enter Date of Birth:</label>
+        <input type="date" id="dob" max="">
+    </div>
+
+    <div class="input-group">
+        <label for="dob">Age at the Date of:</label>
+        <input type="date" id="dob2" max="">
+    </div>
+
+    <button onclick="calculateAge()">Calculate Age</button>
+
+    <div id="result">
+        <div class="result-item">Years   : <span id="years" class="highlight">-</span></div>
+        <div class="result-item">Months  : <span id="months" class="highlight">-</span></div>
+        <div class="result-item">Days    : <span id="days" class="highlight">-</span></div>
+    </div>
+</div>
+
+<script>
+    // Set max date to today so users can't pick future dates
+    document.getElementById('dob').max = new Date().toISOString().split("T")[0];
+    document.getElementById('dob2').max = new Date().toISOString().split("T")[0];
+
+    function calculateAge() {
+        // Start Date
+        const birthDateInput = document.getElementById('dob').value;
+        if (!birthDateInput) {
+            alert("Please select a date!");
+            return;
+        }
+        //End Date
+        const endDateInput = document.getElementById('dob2').value;
+        if (!endDateInput) {
+            alert("Please select a date!");
+            return;
+        }
+
+        const birthDate = new Date(birthDateInput);
+        const endDate = new Date(endDateInput);
+
+        let years =  endDate.getFullYear() - birthDate.getFullYear();
+        let months = endDate.getMonth() - birthDate.getMonth();
+        let days =   endDate.getDate() - birthDate.getDate();
+
+        // Adjust for negative days
+        if (days < 0) {
+            months--;
+            // Get last day of previous month
+            const lastMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+            days += lastMonth.getDate();
+        }
+
+        // Adjust for negative months
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        // Display results
+        document.getElementById('years').innerText = years;
+        document.getElementById('months').innerText = months;
+        document.getElementById('days').innerText = days;
+        document.getElementById('result').style.display = 'block';
+    }
+</script>
+
+</body>
+</html> 
